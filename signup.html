@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup - LMS</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <header>
+        <img src="logo.jpg" alt="LMS Logo" style="width: 100px; height: 100px;">
+        <h1>LMS - Learning Management System</h1>
+    </header>
+    <div>
+        <nav>
+            <a href="index.html">Homepage</a>
+        </nav>
+    </div>
+    
+    <main class="login">
+        <h2>Sign Up</h2>
+        <form id="signup-form">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br><br>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br><br>
+            
+            <label for="confirm-password">Confirm Password:</label>
+            <input type="password" id="confirm-password" name="confirm-password" required><br><br>
+        
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </form> 
+        <br>
+        <br>  
+        <button type="submit" id="signup-btn">Sign Up</button>
+            <br><br>
+            <a href="login.html">Already have an account? Login here</a>
+        <!--Message Box HTML-->
+        <br>
+        <br>
+        <div id="message-box" class="message-box"></div>
+        
+    </main>
+    <footer>
+        <p>&copy; 2025 LMS. All rights reserved.</p>
+    </footer>
+    <script>
+        document.getElementById("signup-btn").addEventListener("click", function() {
+            
+
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirm-password").value;
+            const email = document.getElementById("email").value;
+            const messageBox = document.getElementById("message-box");
+            //array to hold all error messages
+            let errorMessages = [];
+
+            //validate username via regex
+            const usernameRegex = /^[A-Za-z][A-Za-z0-9_-]{2,19}$/;
+            if (!usernameRegex.test(username)) 
+            {
+                // adds error message to error message array
+                errorMessages.push("Invalid username (Reason:...)");
+            }
+
+            // validate pw via regex
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_+=\[\]{}|;:'",.<>?/`~])[A-Za-z\d!@#$%^&*()\-_+=\[\]{}|;:'",.<>?/`~]{8,}$/;
+            if (!passwordRegex.test(password)) 
+            {
+                errorMessages.push("Invalid password (Reason:...)");
+            }
+
+
+            // validate email via regex
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test(email)) 
+            {
+                errorMessages.push("Invalid email (Reason:...)");
+                
+            }
+
+            // validate confirm pw via regex
+            if (password !== confirmPassword) 
+            {
+                errorMessages.push("Passwords do not match");
+                
+            }
+
+            if (errorMessages.length > 0) 
+            {
+                displayErrorMessage(errorMessages)
+                return;
+            }
+
+            // Success Message if all requirements met
+            displayMessage("Signup successful! Redirecting to login...", "success");
+            setTimeout(() => {
+                window.location.href = "login.html";
+            }, 2000);
+           
+           
+        });
+        // function to display message in css container
+        function displayMessage(message, type) 
+        {
+            const messageBox = document.getElementById("message-box");
+            messageBox.innerText = message;
+            messageBox.className = "message-box " + type;
+            messageBox.style.display = "block";
+        }
+        //function to display all error messages
+        function displayErrorMessage(messages) 
+        {
+            const messageBox = document.getElementById("message-box");
+    
+            // Join the array elements with a newline and display as plain text
+            messageBox.innerText = messages.join("\n");
+    
+            messageBox.className = "message-box ";
+            messageBox.style.display = "block";
+        }
+    </script>
+</body>
+</html>
