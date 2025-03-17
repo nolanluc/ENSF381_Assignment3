@@ -37,7 +37,7 @@
             <label for="q1b">Home Tool Markup Language</label><br>
         </div>
         <br>
-        <button class="ans" onclick="checkAnswer()">Submit Answer</button>
+        <button class="ans" onclick="checkAnswer1()">Submit Answer</button>
         
         <h3>Question 2</h3>
         <p>Which of the following are HTML elements? (Select all that apply)</p>
@@ -48,11 +48,11 @@
         <label for="q2b">&lt;span&gt;</label><br>
         </div>
         <br>
-        <button class="ans" onclick="checkAnswer()">Submit Answer</button>
+        <button class="ans" onclick="checkAnswer2()">Submit Answer</button>
         
         <br><br>
         <a href="leaderboard.html">
-            <button class="FinQz">Finish Quiz</button>
+            <button class="FinQz" onclick="submitQuiz(event)">Finish Quiz</button>
         </a>
     </main>
     <footer>
@@ -88,13 +88,12 @@
             
         }
 
-    
-        function checkAnswer(){
-            let score = 0;
+        let score = 0;
+
+        function checkAnswer1(){
             const question1a = document.getElementById('q1a').checked;
             const question1b = document.getElementById('q1b').checked;
-            const question2a = document.getElementById('q2a').checked;
-            const question2b = document.getElementById('q2b').checked;
+
 
             if (question1a){
                 alert("Correct Answer; +50 points!")
@@ -105,6 +104,13 @@
                 alert("You must enter an answer!")
                 return;
             }
+
+
+        }
+
+        function checkAnswer2(){
+            const question2a = document.getElementById('q2a').checked;
+            const question2b = document.getElementById('q2b').checked;
 
             if (!question2a && !question2b) {
                 alert("You must select atleast one answer!")
@@ -118,13 +124,15 @@
                 alert("One answer is correct; +25 points!");
                 score += 25;
             }
+        }
 
-
-
+        function submitQuiz(){
+            event.preventDefault();
             alert("The final grade is: " + score + "/100");
 
-
-
+            setTimeout(function(){
+                window.location.href = "leaderboard.html";
+            }, 1000);
         }
 
  
