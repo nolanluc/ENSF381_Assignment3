@@ -31,10 +31,10 @@
             <!-- Display Course 1, 2, and 3 in the same line -->
             <h2>Enrolled Courses</h2>
             <hr>
-            <table class="cv">
+            <table class="cv" id="enrolled-classes">
 				<tr>
 					<td>
-						<div>
+						<div class="courseTile" onmouseover="highlight(event)" onmouseout="resetHighlight(event)">
                             <img src="course1.jpg" alt="Course 1">
                             <p>Course Name: Web Development</p>
                             <p>Course Code: WD381</p>
@@ -42,7 +42,7 @@
                         </div>
 					</td>
 					<td>
-						<div>
+						<div class="courseTile" onmouseover="highlight(event)" onmouseout="resetHighlight(event)">
                             <img src="course1.jpg" alt="Course 1">
                             <p>Course Name: Data Structures</p>
                             <p>Course Code: DS371</p>
@@ -50,7 +50,7 @@
                         </div>
 					</td>
                     <td>
-						<div>
+						<div class="courseTile"  onmouseover="highlight(event)" onmouseout="resetHighlight(event)">
                             <img src="course1.jpg" alt="Course 1">
                             <p>Course Name: Database Systems</p>
                             <p>Course Code: DB346</p>
@@ -61,7 +61,7 @@
 				<!-- Display Course 4 and 5 in the same line -->
 				<tr>
 					<td>
-						<div>
+						<div class="courseTile" onmouseover="highlight(event)" onmouseout="resetHighlight(event)">
                             <img src="course1.jpg" alt="Course 1">
                             <p>Course Name: Software Testing</p>
                             <p>Course Code: ST484</p>
@@ -69,7 +69,7 @@
                         </div>
 					</td>
 					<td>
-						<div>
+						<div class="courseTile" onmouseover="highlight(event)" onmouseout="resetHighlight(event)">
                             <img src="course1.jpg" alt="Course 1">
                             <p>Course Name: Software Architectures</p>
                             <p>Course Code: SA396</p>
@@ -89,24 +89,24 @@
             <!-- Display Course 1, 2, and 3 in the same line -->
             <h2>Pending Invitations</h2>
             <hr>
-            <table class="cv">
+            <table class="cv" id="pending-classes">
 				<tr>
 					<td>
-                        <div>
+                        <div class="courseTile" onmouseover="highlight(event)" onmouseout="resetHighlight(event)">
                             <img src="course2.jpg" alt="Course 2">
                             <p>Course Name: Data Science</p>
                             <p>Course Code: DS102</p>
-                            <button class="accept">Accept</button>
-                            <button class="decline">Decline</button>
+                            <button class="accept" onclick="enrolledClass(event)">Accept</button>
+                            <button class="decline" onclick="removeClass(event)">Decline</button>
                         </div>
                     </td> 
                     <td>
-                        <div>
+                        <div class="courseTile" onmouseover="highlight(event)" onmouseout="resetHighlight(event)">
                             <img src="course2.jpg" alt="Course 2">
                             <p>Course Name: Machine Learning</p>
                             <p>Course Code: ML105</p>
-                            <button class="accept">Accept</button>
-                            <button class="decline">Decline</button>
+                            <button class="accept" onclick="enrolledClass(event)">Accept</button>
+                            <button class="decline" onclick="removeClass(event)">Decline</button>
                         </div>
                     </td> 
                 </tr>
@@ -116,5 +116,36 @@
     <footer>
         <p>&copy; 2025 LMS. All rights reserved.</p>
     </footer>
+
+    <script>
+        function enrolledClass(event){
+            let pendingDiv = event.target.closest("div");
+            let courseList = document.getElementById("enrolled-classes");
+
+            pendingDiv.querySelector(".accept").remove();
+            pendingDiv.querySelector(".decline").remove();
+
+            let newRow = courseList.insertRow();
+            let newCell = newRow.insertCell(0);
+            newCell.appendChild(pendingDiv);
+        }
+
+        function removeClass(event){
+            let removeClass = event.target.closest("td");
+            removeClass.remove();
+        }
+
+        function highlight(event){
+            event.target.closest('.courseTile').style.backgroundColor = "#ffffff";
+
+        }
+
+        function resetHighlight(event){
+            event.target.closest('.courseTile').style.backgroundColor = "";
+
+        }
+
+
+    </script>
 </body>
 </html>

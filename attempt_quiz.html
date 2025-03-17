@@ -22,6 +22,7 @@
         <div class="quizdetails">
             <h2>Course Name: Web Development</h2>
             <h2>Course Code: WD381</h2>
+            <h2 id="quiztimer"></h2> 
             <p>Topic: HTML Basics</p>
             <p>Deadline: 11:59 PM, February 10, 2025</p>
             <p>Attempts Allowed: 1</p>
@@ -36,7 +37,7 @@
             <label for="q1b">Home Tool Markup Language</label><br>
         </div>
         <br>
-        <button class="ans">Submit Answer</button>
+        <button class="ans" onclick="checkAnswer1()">Submit Answer</button>
         
         <h3>Question 2</h3>
         <p>Which of the following are HTML elements? (Select all that apply)</p>
@@ -47,15 +48,94 @@
         <label for="q2b">&lt;span&gt;</label><br>
         </div>
         <br>
-        <button class="ans">Submit Answer</button>
+        <button class="ans" onclick="checkAnswer2()">Submit Answer</button>
         
         <br><br>
         <a href="leaderboard.html">
-            <button class="FinQz">Finish Quiz</button>
+            <button class="FinQz" onclick="submitQuiz(event)">Finish Quiz</button>
         </a>
     </main>
     <footer>
         <p>&copy; 2025 LMS. All rights reserved.</p>
     </footer>
+    <script>
+        const setTimer = 10;
+        let time = setTimer * 60;
+
+        const countdown = document.getElementById("quiztimer");
+
+        timerInterval = setInterval(counting, 1000);
+
+        function counting(){
+            const minutes = Math.floor(time / 60);
+            let seconds = time % 60;
+
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+
+            countdown.textContent = `${minutes}:${seconds}`;
+
+            time--;
+
+            if (time < 0) {
+                clearInterval(timerInterval);
+                alert("Back to the leaderboard");
+                
+                setTimeout(function(){
+                    window.location.href = "leaderboard.html";
+                }, 1000);
+            }
+
+            
+        }
+
+        let score = 0;
+
+        function checkAnswer1(){
+            const question1a = document.getElementById('q1a').checked;
+            const question1b = document.getElementById('q1b').checked;
+
+
+            if (question1a){
+                alert("Correct Answer; +50 points!")
+                score += 50;
+            } else if (question1b){
+                alert("Incorrect Answer!")
+            } else {
+                alert("You must enter an answer!")
+                return;
+            }
+
+
+        }
+
+        function checkAnswer2(){
+            const question2a = document.getElementById('q2a').checked;
+            const question2b = document.getElementById('q2b').checked;
+
+            if (!question2a && !question2b) {
+                alert("You must select atleast one answer!")
+                return;
+            }
+
+            if (question2a && question2b) {
+                alert("Both answers are correct; +50 points!");
+                score += 50;
+            } else if (question2a || question2b) {
+                alert("One answer is correct; +25 points!");
+                score += 25;
+            }
+        }
+
+        function submitQuiz(){
+            event.preventDefault();
+            alert("The final grade is: " + score + "/100");
+
+            setTimeout(function(){
+                window.location.href = "leaderboard.html";
+            }, 1000);
+        }
+
+ 
+    </script>
 </body>
 </html>
